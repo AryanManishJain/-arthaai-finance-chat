@@ -22,7 +22,6 @@ async function sendMessage() {
     });
     const data = await response.json();
     const aiReply = data.choices[0].message.content;
-
     chatBox.innerHTML += `<div class="message">ArthaAI: ${aiReply}</div>`;
   } catch (err) {
     chatBox.innerHTML += `<div class="message">Error connecting to AI</div>`;
