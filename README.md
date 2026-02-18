@@ -7,7 +7,6 @@ A clean starter for building a **finance-only AI assistant** with preloaded **HT
 - Finance-topic gate (rejects non-finance prompts).
 - Safety guardrails for risky/illegal or “guaranteed returns” style requests.
 - Educational disclaimer in responses.
-
 ## Quick start
 ```bash
 npm install
@@ -78,3 +77,4 @@ If you want, next step I can implement:
 - OpenAI/Anthropic backend integration,
 - structured JSON response format,
 - and a complete prompt policy module.
+index.html
