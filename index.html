@@ -1,186 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ArthaAI Finance Assistant</title>
-<style>
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto;
-  background: #343541;
-  color: #ececf1;
-}
-.app {
-  display: flex;
-  height: 100vh;
-}
-/* Sidebar */
-.sidebar {
-  width: 260px;
-  background: #202123;
-  padding: 20px;
-}
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-.new-chat {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  background: #3e3f4b;
-  color: white;
-  cursor: pointer;
-}
-/* Chat Area */
-.chat-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 40px;
-}
-.message {
-  max-width: 650px;
-  margin: 20px auto;
-  line-height: 1.6;
-  white-space: pre-wrap;
-}
-.user {
-  color: #19c37d;
-}
-.bot {
-  color: #ececf1;
-}
-.input-bar {
-  padding: 20px;
-  background: #40414f;
-  display: flex;
-  justify-content: center;
-}
-.input-box {
-  width: 650px;
-  display: flex;
-  gap: 10px;
-}
-input {
-  flex: 1;
-  padding: 14px;
-  border-radius: 10px;
-  border: none;
-  background: #2a2b32;
-  color: white;
-  font-size: 15px;
-}
-button {
-  padding: 14px 20px;
-  border-radius: 10px;
-  border: none;
-  background: #3e3f4b;
-  color: white;
-  cursor: pointer;
-}
-button:hover {
-  opacity: 0.9;
-}
-</style>
-</head>
-<body>
-<div class="app">
-  <div class="sidebar">
-    <div class="logo">ArthaAI</div>
-    <button class="new-chat" onclick="newChat()">+ New Chat</button>
-  </div>
-  <div class="chat-area">
-    <div class="messages" id="messages">
-      <div class="message bot">
-Hi! I’m ArthaAI — your finance assistant. Ask me anything about money, startups, or investing.
-      </div>
+   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ArthaAI Finance Assistant</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <h1 class="logo">ArthaAI</h1>
+        <p class="tag">Finance-only AI copilot</p>
+        <button class="new-chat" id="new-chat">+ New Chat</button>
+
+        <div class="card">
+          <h2>Session focus</h2>
+          <select id="focus">
+            <option value="general">General finance</option>
+            <option value="startup">Startup finance</option>
+            <option value="investing">Investing</option>
+            <option value="budgeting">Budgeting</option>
+            <option value="tax">Tax planning</option>
+          </select>
+        </div>
+
+        <div class="card">
+          <h2>Guardrails</h2>
+          <ul>
+            <li>Finance questions only</li>
+            <li>No guaranteed-return claims</li>
+            <li>Educational, not legal/tax advice</li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="chat-area">
+        <section class="messages" id="messages" aria-live="polite">
+          <div class="message bot">
+            Hi! I’m ArthaAI. Ask finance questions about budgeting, investing,
+            startup metrics, cash flow, or tax basics.
+          </div>
+        </section>
+
+        <form class="input-bar" id="chat-form">
+          <input
+            id="input"
+            autocomplete="off"
+            placeholder="Ask a finance question..."
+          />
+          <button type="submit">Send</button>
+        </form>
+      </main>
     </div>
-    <div class="input-bar">
-      <div class="input-box">
-        <input id="input" placeholder="Ask about finance..." />
-        <button onclick="send()">Send</button>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
-/* TYPEWRITER EFFECT */
-function typeText(element, text, speed = 15) {
-  element.textContent = "";
-  let i = 0;
-  function type() {
-    if (i < text.length) {
-      element.textContent += text.charAt(i);
-      i++;
-      setTimeout(type, speed);
-    }
-  }
-  type();
-}
-/* SMART FINANCE REPLIES */
-const financeReplies = [
-"Build emergency savings before risky investments.",
-"Track expenses monthly to understand cash flow.",
-"Compounding works best when you start early.",
-"Separate business and personal finances.",
-"Profit margins matter more than revenue alone.",
-"Diversification reduces long-term risk.",
-"Cash flow is king in early startups.",
-"Focus on unit economics early.",
-"Invest consistently instead of timing the market.",
-"Control burn rate carefully in startups."
-];
-/* SEND MESSAGE */
-function send() {
-  const input = document.getElementById("input");
-  const text = input.value.trim();
-  if (!text) return;
-  addMessage(text, "user");
-  input.value = "";
-  const botDiv = addMessage("", "bot");
-  setTimeout(() => {
-    const reply = getSmartReply(text);
-    typeText(botDiv, reply);
-  }, 600);
-}
-/* ADD MESSAGE TO CHAT */
-function addMessage(text, type) {
-  const messages = document.getElementById("messages");
-  const div = document.createElement("div");
-  div.className = "message " + type;
-  div.textContent = text;
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-  return div;
-}
-/* SMART RESPONSE LOGIC */
-function getSmartReply(userText) {
-  userText = userText.toLowerCase();
-  if(userText.includes("startup"))
-    return "Focus on product-market fit before scaling.";
-  if(userText.includes("invest"))
-    return "Long-term SIP investing usually beats short-term trading.";
-  if(userText.includes("save"))
-    return "Try saving at least 20% of your income.";
-  if(userText.includes("business"))
-    return "Track CAC, LTV, and burn rate carefully.";
-  return financeReplies[Math.floor(Math.random()*financeReplies.length)];
-}
-/* NEW CHAT */
-function newChat() {
-  document.getElementById("messages").innerHTML =
-  `<div class="message bot">
-New chat started. Ask me any finance question.
-</div>`;
-}
-</script>
-</body>
+     <script src="script.js"></script>
+  </body>
 </html>
+
