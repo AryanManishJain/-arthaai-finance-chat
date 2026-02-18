@@ -7,42 +7,15 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="app">
-      <aside class="sidebar">
-        <h1 class="logo">ArthaAI</h1>
-        <p class="tag">Finance-only AI copilot</p>
-        <button class="new-chat" id="new-chat">+ New Chat</button>
-
-        <div class="card">
-          <h2>Session focus</h2>
-          <select id="focus">
-            <option value="general">General finance</option>
-            <option value="startup">Startup finance</option>
-            <option value="investing">Investing</option>
-            <option value="budgeting">Budgeting</option>
-            <option value="tax">Tax planning</option>
-          </select>
-        </div>
-
-        <div class="card">
-          <h2>Guardrails</h2>
-          <ul>
-            <li>Finance questions only</li>
-            <li>No guaranteed-return claims</li>
-            <li>Educational, not legal/tax advice</li>
-          </ul>
-        </div>
-      </aside>
-
-      <main class="chat-area">
+    <main class="screen">
+      <section class="chat-panel">
         <section class="messages" id="messages" aria-live="polite">
-          <div class="message bot">
-            Hi! I’m ArthaAI. Ask finance questions about budgeting, investing,
-            startup metrics, cash flow, or tax basics.
+          <div class="message bot intro">
+            New finance session started. Tell me your goal, time horizon, and risk appetite.
           </div>
         </section>
 
-        <form class="input-bar" id="chat-form">
+        <form class="composer" id="chat-form">
           <input
             id="input"
             autocomplete="off"
@@ -50,9 +23,9 @@
           />
           <button type="submit">Send</button>
         </form>
-      </main>
-    </div>
-     <script src="script.js"></script>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
   </body>
 </html>
-
