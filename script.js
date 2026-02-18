@@ -111,3 +111,10 @@ async function getBackendReply(question, focus) {
   const data = await response.json();
   return data.reply;
 }
+function newChat() {
+  messagesEl.innerHTML = `
+    <div class="message bot">
+      New finance session started. Tell me your goal, time horizon, and risk appetite.
+    </div>
+  `;
+}
