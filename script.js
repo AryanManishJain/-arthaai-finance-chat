@@ -13,7 +13,7 @@ function addMessage(text, role) {
   node.textContent = text;
   messagesEl.appendChild(node);
   messagesEl.scrollTop = messagesEl.scrollHeight;
-    return node;
+  return node;
 }
 function resetChat() {
   messagesEl.innerHTML = "";
@@ -31,16 +31,17 @@ function onInputKeydown(event) {
     event.preventDefault();
     chatForm.requestSubmit();
   }
-  async function onSend(event) {
+}
+async function onSend(event) {
   event.preventDefault();
-     const prompt = inputEl.value.trim();
+  const prompt = inputEl.value.trim();
   if (!prompt) return;
   addMessage(prompt, "user");
   inputEl.value = "";
-    autoResize();
+  autoResize();
   const pending = addMessage("Thinking...", "bot");
   try {
-    const response = await fetch("/api/chat", {
+    const response = await fetch("/api/chat.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -58,4 +59,4 @@ function onInputKeydown(event) {
       "I hit a temporary issue. Try again, or simplify your finance question in one sentence.";
     console.error(error);
   }
-    }
+}
